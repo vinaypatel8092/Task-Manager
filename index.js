@@ -28,6 +28,18 @@ app.get("/file/:filename", (req, res) => {
     })
 });
 
+// Edit File Name
+app.get("/edit/:filename", (req, res) => {
+    res.render("edit", {filename: req.params.filename});
+});
+
+app.post("/edit", (req, res) => {
+    fs.rename(`./files/${req.body.previous}`, `./files/${req.body.new}`, (err) => {
+        if (err) console.log(err);
+        res.redirect("/");
+    })
+});
+
 app.listen(3000, () => {
     console.log("Server started on port 3000");
 });
